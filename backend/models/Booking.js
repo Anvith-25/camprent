@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
   name: {
     type: String,
     required: [true, 'Customer name is required'],
@@ -56,8 +61,22 @@ const bookingSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'confirmed', 'cancelled'],
+    enum: ['pending', 'confirmed', 'cancelled', 'completed'],
     default: 'pending'
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['unpaid', 'partial', 'paid'],
+    default: 'unpaid'
+  },
+  paymentAmount: {
+    type: Number,
+    default: 0
+  },
+  adminNotes: {
+    type: String,
+    trim: true,
+    maxlength: [500, 'Admin notes cannot exceed 500 characters']
   },
   totalPrice: {
     type: Number

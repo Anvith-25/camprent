@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – Hyderabad Camping Tent Rentals</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--gray-900) 0%, #1A3A5C 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.auth-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 48px 44px;
+  width: 100%; max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInUp 0.5s ease both;
+}
+.auth-logo { text-align: center; margin-bottom: 32px; }
+.auth-logo-icon {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; margin: 0 auto 12px;
+  box-shadow: 0 4px 16px rgba(58,110,165,0.3);
+}
+.auth-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; color: var(--gray-900); margin-bottom: 6px; }
+.auth-sub { color: var(--gray-600); font-size: 0.9rem; }
+.auth-form { display: flex; flex-direction: column; gap: 18px; }
+.auth-input-group { display: flex; flex-direction: column; gap: 6px; }
+.auth-input-group label { font-size: 0.83rem; font-weight: 600; color: var(--gray-900); }
+.auth-input-group input {
+  background: var(--gray-50); border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm); padding: 13px 16px;
+  font-size: 0.95rem; font-family: var(--font-body); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.auth-input-group input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(58,110,165,0.1);
+  background: var(--white);
+}
+.auth-input-group input.error { border-color: #E74C3C; background: #FFF5F5; }
+.auth-err { font-size: 0.78rem; color: #E74C3C; display: none; }
+.auth-err.show { display: block; }
+.auth-alert {
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  font-size: 0.88rem; font-weight: 500;
+  display: none; margin-bottom: 4px;
+}
+.auth-alert.error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; display: block; }
+.auth-alert.success { background: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; display: block; }
+.auth-divider { text-align: center; color: var(--gray-400); font-size: 0.85rem; margin: 4px 0; }
+.auth-link { color: var(--blue); font-weight: 600; text-decoration: none; }
+.auth-link:hover { text-decoration: underline; }
+.back-home { display: block; text-align: center; margin-top: 20px; color: var(--gray-400); font-size: 0.85rem; text-decoration: none; }
+.back-home:hover { color: var(--blue); }
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 44px; }
+.toggle-pw {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--gray-400);
+  padding: 0;
+}
+</style>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">⛺</div>
+      <div class="auth-title">Welcome Back</div>
+      <div class="auth-sub">Sign in to manage your tent rentals</div>
+    </div>
+
+    <div class="auth-alert" id="authAlert"></div>
+
+    <form class="auth-form" id="loginForm" novalidate>
+      <div class="auth-input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <span class="auth-err" id="emailErr"></span>
+      </div>
+      <div class="auth-input-group">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+          <button type="button" class="toggle-pw" onclick="togglePw()">👁️</button>
+        </div>
+        <span class="auth-err" id="passwordErr"></span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" id="loginBtn" style="width:100%;justify-content:center;margin-top:4px;">
+        Sign In
+      </button>
+    </form>
+
+    <div class="auth-divider" style="margin-top:20px;">Don't have an account? <a href="/register" class="auth-link">Create one free</a></div>
+    <a href="/" class="back-home">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin;
+
+// Redirect if already logged in
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+if (token && user) {
+  window.location.href = user.role === 'admin' ? '/admin' : '/dashboard';
+}
+
+function togglePw() {
+  const pw = document.getElementById('password');
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+}
+
+function showAlert(msg, type) {
+  const el = document.getElementById('authAlert');
+  el.textContent = msg;
+  el.className = 'auth-alert ' + type;
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('loginBtn');
+
+  // Clear errors
+  document.getElementById('emailErr').classList.remove('show');
+  document.getElementById('passwordErr').classList.remove('show');
+  document.getElementById('authAlert').className = 'auth-alert';
+
+  let valid = true;
+  if (!email) {
+    document.getElementById('emailErr').textContent = 'Email is required.';
+    document.getElementById('emailErr').classList.add('show');
+    document.getElementById('email').classList.add('error');
+    valid = false;
+  }
+  if (!password) {
+    document.getElementById('passwordErr').textContent = 'Password is required.';
+    document.getElementById('passwordErr').classList.add('show');
+    document.getElementById('password').classList.add('error');
+    valid = false;
+  }
+  if (!valid) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+
+  try {
+    const res = await fetch(`${API}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      showAlert('Login successful! Redirecting…', 'success');
+      setTimeout(() => {
+        window.location.href = data.user.role === 'admin' ? '/admin' : '/dashboard';
+      }, 800);
+    } else {
+      showAlert(data.message || 'Login failed. Please try again.', 'error');
+    }
+  } catch (err) {
+    showAlert('Cannot connect to server. Please try again.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+});
+</script>
+</body>
+</html>

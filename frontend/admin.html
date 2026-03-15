@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Hyderabad Camping Tent Rentals</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body { background:var(--gray-50); }
+.admin-nav { background:var(--gray-900); padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; }
+.admin-nav-logo { font-family:var(--font-display); font-size:1rem; font-weight:800; color:var(--white); display:flex; align-items:center; gap:10px; }
+.admin-badge { background:var(--orange); color:white; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:0.06em; }
+.admin-nav-right { display:flex; align-items:center; gap:12px; }
+.admin-layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 60px); }
+.admin-sidebar { background:var(--white); border-right:1px solid var(--gray-200); padding:24px 0; }
+.sidebar-section { padding:0 16px 16px; }
+.sidebar-label { font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-400); padding:0 8px; margin-bottom:6px; }
+.sidebar-link { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); color:var(--gray-600); text-decoration:none; font-size:0.88rem; font-weight:500; transition:all 0.18s; margin-bottom:2px; cursor:pointer; border:none; background:none; width:100%; text-align:left; }
+.sidebar-link:hover { background:var(--blue-light); color:var(--blue); }
+.sidebar-link.active { background:var(--blue-light); color:var(--blue); font-weight:700; }
+.sidebar-link-icon { font-size:1rem; width:20px; text-align:center; }
+.admin-main { padding:32px; overflow-y:auto; }
+.page-section { display:none; }
+.page-section.active { display:block; }
+.admin-page-title { font-family:var(--font-display); font-size:1.5rem; font-weight:800; color:var(--gray-900); margin-bottom:6px; }
+.admin-page-sub { color:var(--gray-600); font-size:0.9rem; margin-bottom:28px; }
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:28px; }
+.stat-box { background:var(--white); border-radius:var(--radius); padding:22px; border:1.5px solid var(--gray-100); }
+.stat-box-num { font-family:var(--font-display); font-size:2rem; font-weight:800; }
+.stat-box-label { font-size:0.82rem; color:var(--gray-600); margin-top:4px; }
+.stat-box-icon { font-size:1.5rem; margin-bottom:10px; }
+.admin-card { background:var(--white); border-radius:var(--radius-lg); border:1.5px solid var(--gray-100); overflow:hidden; margin-bottom:24px; }
+.admin-card-header { padding:18px 22px; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between; background:var(--white); }
+.admin-card-header h3 { font-family:var(--font-display); font-size:1rem; font-weight:800; }
+.data-table { width:100%; border-collapse:collapse; }
+.data-table th { padding:11px 16px; text-align:left; font-size:0.73rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-400); background:var(--gray-50); border-bottom:1px solid var(--gray-100); white-space:nowrap; }
+.data-table td { padding:13px 16px; font-size:0.87rem; border-bottom:1px solid var(--gray-100); vertical-align:middle; }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:rgba(248,249,251,0.8); }
+.status-badge { display:inline-block; padding:3px 10px; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap; }
+.status-pending { background:#FEF3C7; color:#D97706; }
+.status-confirmed { background:#D1FAE5; color:#059669; }
+.status-cancelled { background:#FEE2E2; color:#DC2626; }
+.status-completed { background:#DBEAFE; color:#2563EB; }
+.pay-unpaid { background:#FEF3C7; color:#D97706; }
+.pay-paid { background:#D1FAE5; color:#059669; }
+.pay-partial { background:#E0E7FF; color:#4F46E5; }
+.action-btn { padding:5px 12px; border-radius:6px; font-size:0.78rem; font-weight:600; border:none; cursor:pointer; font-family:var(--font-body); transition:all 0.2s; }
+.btn-edit { background:var(--blue-light); color:var(--blue); }
+.btn-edit:hover { background:var(--blue); color:white; }
+.btn-del { background:#FEE2E2; color:#DC2626; }
+.btn-del:hover { background:#DC2626; color:white; }
+.filter-bar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:16px 22px; background:var(--gray-50); border-bottom:1px solid var(--gray-100); }
+.filter-bar select, .filter-bar input { background:var(--white); border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:8px 12px; font-size:0.85rem; font-family:var(--font-body); outline:none; }
+.filter-bar select:focus, .filter-bar input:focus { border-color:var(--blue); }
+/* Edit Modal */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; display:none; align-items:center; justify-content:center; padding:24px; backdrop-filter:blur(3px); }
+.modal-bg.open { display:flex; }
+.modal-panel { background:var(--white); border-radius:var(--radius-lg); padding:36px; width:100%; max-width:460px; box-shadow:var(--shadow-lg); animation:scaleIn 0.3s ease; }
+.modal-panel h3 { font-family:var(--font-display); font-size:1.2rem; font-weight:800; margin-bottom:20px; }
+.modal-form { display:flex; flex-direction:column; gap:14px; }
+.modal-form label { font-size:0.82rem; font-weight:600; margin-bottom:4px; display:block; }
+.modal-form select, .modal-form input, .modal-form textarea { width:100%; border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:10px 14px; font-size:0.9rem; font-family:var(--font-body); outline:none; background:var(--gray-50); }
+.modal-form select:focus, .modal-form input:focus, .modal-form textarea:focus { border-color:var(--blue); background:white; }
+.modal-form textarea { resize:vertical; min-height:80px; }
+.modal-btns { display:flex; gap:10px; margin-top:6px; }
+.alert-bar { padding:12px 16px; border-radius:var(--radius-sm); font-size:0.88rem; font-weight:500; margin-bottom:16px; display:none; }
+.alert-bar.success { background:#D1FAE5; color:#059669; display:block; }
+.alert-bar.error { background:#FEE2E2; color:#DC2626; display:block; }
+.empty-state { text-align:center; padding:48px; color:var(--gray-400); }
+.revenue-highlight { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:white; border:none; }
+.revenue-highlight .stat-box-num { color:white; }
+.revenue-highlight .stat-box-label { color:rgba(255,255,255,0.75); }
+@media(max-width:900px){ .admin-layout{grid-template-columns:1fr;} .admin-sidebar{display:none;} .stat-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<!-- Admin Nav -->
+<nav class="admin-nav">
+  <div class="admin-nav-logo">
+    ⛺ HydCamp Admin <span class="admin-badge">ADMIN</span>
+  </div>
+  <div class="admin-nav-right">
+    <span style="color:rgba(255,255,255,0.6);font-size:0.85rem;" id="adminName"></span>
+    <a href="/" class="btn btn-ghost btn-sm" target="_blank">View Site</a>
+    <button class="btn btn-sm" style="background:#EF4444;color:white;border:none;" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Main</div>
+      <button class="sidebar-link active" onclick="showSection('dashboard')"><span class="sidebar-link-icon">📊</span> Dashboard</button>
+      <button class="sidebar-link" onclick="showSection('bookings')"><span class="sidebar-link-icon">📋</span> All Bookings</button>
+      <button class="sidebar-link" onclick="showSection('users')"><span class="sidebar-link-icon">👥</span> Customers</button>
+    </div>
+    <div class="sidebar-section" style="margin-top:8px;">
+      <div class="sidebar-label">Quick Links</div>
+      <a href="/tents" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">⛺</span> Tent Catalog</a>
+      <a href="tel:+919381704244" class="sidebar-link"><span class="sidebar-link-icon">📞</span> Call Support</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <div class="alert-bar" id="globalAlert"></div>
+
+    <!-- ── DASHBOARD SECTION ── -->
+    <div class="page-section active" id="section-dashboard">
+      <div class="admin-page-title">Dashboard Overview</div>
+      <div class="admin-page-sub">Real-time stats for your tent rental business</div>
+
+      <div class="stat-grid" id="statGrid">
+        <div class="stat-box"><div class="stat-box-icon">📋</div><div class="stat-box-num" id="st-total">–</div><div class="stat-box-label">Total Bookings</div></div>
+        <div class="stat-box"><div class="stat-box-icon">⏳</div><div class="stat-box-num" id="st-pending">–</div><div class="stat-box-label">Pending</div></div>
+        <div class="stat-box"><div class="stat-box-icon">✅</div><div class="stat-box-num" id="st-confirmed">–</div><div class="stat-box-label">Confirmed</div></div>
+        <div class="stat-box revenue-highlight"><div class="stat-box-icon">💰</div><div class="stat-box-num" id="st-revenue">–</div><div class="stat-box-label">Total Revenue (Paid)</div></div>
+        <div class="stat-box"><div class="stat-box-icon">🚚</div><div class="stat-box-num" id="st-unpaid">–</div><div class="stat-box-label">Awaiting Payment</div></div>
+        <div class="stat-box"><div class="stat-box-icon">✔️</div><div class="stat-box-num" id="st-paid">–</div><div class="stat-box-label">Paid Bookings</div></div>
+        <div class="stat-box"><div class="stat-box-icon">❌</div><div class="stat-box-num" id="st-cancelled">–</div><div class="stat-box-label">Cancelled</div></div>
+        <div class="stat-box"><div class="stat-box-icon">🏁</div><div class="stat-box-num" id="st-completed">–</div><div class="stat-box-label">Completed</div></div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>🕐 Recent Bookings</h3><button class="action-btn btn-edit" onclick="showSection('bookings')">View All</button></div>
+        <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Booking ID</th><th>Customer</th><th>Tent</th><th>Dates</th><th>Total</th><th>Status</th><th>Payment</th></tr></thead><tbody id="recentBody"><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ── BOOKINGS SECTION ── -->
+    <div class="page-section" id="section-bookings">
+      <div class="admin-page-title">All Bookings</div>
+      <div class="admin-page-sub">Manage, update status, and track payments for all bookings</div>
+      <div class="admin-card">
+        <div class="filter-bar">
+          <select id="filterStatus" onchange="loadAllBookings()">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <select id="filterPayment" onchange="loadAllBookings()">
+            <option value="">All Payments</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="partial">Partial</option>
+            <option value="paid">Paid</option>
+          </select>
+          <input type="text" id="searchInput" placeholder="Search name / ID…" oninput="filterTable()" style="min-width:180px;">
+          <button class="btn btn-primary btn-sm" onclick="loadAllBookings()">🔄 Refresh</button>
+        </div>
+        <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Booking ID</th><th>Name</th><th>Phone</th><th>Tent</th><th>Dates</th><th>Qty</th><th>Total</th><th>Delivery</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="allBookingsBody"><tr><td colspan="11" class="empty-state">Loading…</td></tr></tbody></table></div>
+        <div style="padding:16px 22px;color:var(--gray-600);font-size:0.85rem;" id="bookingCount"></div>
+      </div>
+    </div>
+
+    <!-- ── USERS SECTION ── -->
+    <div class="page-section" id="section-users">
+      <div class="admin-page-title">Customers</div>
+      <div class="admin-page-sub">All registered users on the platform</div>
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>👥 All Users</h3><span id="userCount" style="font-size:0.85rem;color:var(--gray-600);"></span></div>
+        <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Edit Booking Modal -->
+<div class="modal-bg" id="editModal">
+  <div class="modal-panel">
+    <h3>✏️ Update Booking</h3>
+    <input type="hidden" id="editBookingId">
+    <div class="modal-form">
+      <div>
+        <label>Booking Status</label>
+        <select id="editStatus">
+          <option value="pending">⏳ Pending</option>
+          <option value="confirmed">✅ Confirmed</option>
+          <option value="completed">🏁 Completed</option>
+          <option value="cancelled">❌ Cancelled</option>
+        </select>
+      </div>
+      <div>
+        <label>Payment Status</label>
+        <select id="editPayment">
+          <option value="unpaid">💸 Unpaid</option>
+          <option value="partial">🔄 Partial</option>
+          <option value="paid">✅ Paid</option>
+        </select>
+      </div>
+      <div>
+        <label>Amount Paid (₹)</label>
+        <input type="number" id="editAmount" placeholder="0" min="0">
+      </div>
+      <div>
+        <label>Admin Notes</label>
+        <textarea id="editNotes" placeholder="Internal notes about this booking…"></textarea>
+      </div>
+      <div class="modal-btns">
+        <button class="btn btn-primary" onclick="saveBooking()">💾 Save Changes</button>
+        <button class="btn btn-outline" onclick="closeEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin;
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+// Auth guard — admin only
+if (!token || !user) { window.location.href = '/login'; }
+if (user?.role !== 'admin') { window.location.href = '/dashboard'; }
+
+document.getElementById('adminName').textContent = user?.name || 'Admin';
+
+function logout() {
+  localStorage.removeItem('token'); localStorage.removeItem('user');
+  window.location.href = '/login';
+}
+
+function showSection(name) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l => { if (l.textContent.toLowerCase().includes(name)) l.classList.add('active'); });
+  if (name === 'bookings') loadAllBookings();
+  if (name === 'users') loadUsers();
+}
+
+const TENT_NAMES = { explorer:'Explorer (2P)', adventure:'Adventure (4P)', family:'Family Dome (6P)' };
+function fmt(d) { return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+function sb(s) { return `<span class="status-badge status-${s}">${s}</span>`; }
+function pb(s) { return `<span class="status-badge pay-${s}">${s}</span>`; }
+
+function showAlert(msg, type) {
+  const el = document.getElementById('globalAlert');
+  el.textContent = msg; el.className = 'alert-bar ' + type;
+  setTimeout(() => { el.className = 'alert-bar'; }, 4000);
+}
+
+// ── Load Dashboard Stats ──
+async function loadStats() {
+  try {
+    const res = await fetch(`${API}/api/bookings/stats`, { headers: { 'Authorization': `Bearer ${token}` } });
+    const data = await res.json();
+    if (!data.success) return;
+    const s = data.stats;
+    document.getElementById('st-total').textContent = s.total;
+    document.getElementById('st-pending').textContent = s.pending;
+    document.getElementById('st-confirmed').textContent = s.confirmed;
+    document.getElementById('st-cancelled').textContent = s.cancelled;
+    document.getElementById('st-completed').textContent = s.completed;
+    document.getElementById('st-unpaid').textContent = s.unpaid;
+    document.getElementById('st-paid').textContent = s.paid;
+    document.getElementById('st-revenue').textContent = `₹${s.totalRevenue.toLocaleString('en-IN')}`;
+
+    const tbody = document.getElementById('recentBody');
+    if (!data.recent.length) { tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No bookings yet</td></tr>`; return; }
+    tbody.innerHTML = data.recent.map(b => `
+      <tr>
+        <td><code style="font-size:0.78rem;background:var(--gray-100);padding:2px 6px;border-radius:4px;">${b.bookingId}</code></td>
+        <td>${b.user?.name || b.name}</td>
+        <td>${TENT_NAMES[b.tentType] || b.tentType}</td>
+        <td style="white-space:nowrap;">${fmt(b.startDate)} → ${fmt(b.endDate)}</td>
+        <td><strong>₹${(b.totalPrice||0).toLocaleString('en-IN')}</strong></td>
+        <td>${sb(b.status)}</td>
+        <td>${pb(b.paymentStatus)}</td>
+      </tr>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+// ── Load All Bookings ──
+let allBookingsCache = [];
+async function loadAllBookings() {
+  const status = document.getElementById('filterStatus').value;
+  const payment = document.getElementById('filterPayment').value;
+  let url = `${API}/api/bookings?limit=100`;
+  if (status) url += `&status=${status}`;
+  if (payment) url += `&payment=${payment}`;
+  try {
+    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    const data = await res.json();
+    if (!data.success) return;
+    allBookingsCache = data.bookings;
+    renderBookings(allBookingsCache);
+    document.getElementById('bookingCount').textContent = `Showing ${data.bookings.length} booking(s)`;
+  } catch(e) { console.error(e); }
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = allBookingsCache.filter(b =>
+    b.name.toLowerCase().includes(q) ||
+    b.bookingId.toLowerCase().includes(q) ||
+    (b.email || '').toLowerCase().includes(q) ||
+    (b.phone || '').includes(q)
+  );
+  renderBookings(filtered);
+}
+
+function renderBookings(bookings) {
+  const tbody = document.getElementById('allBookingsBody');
+  if (!bookings.length) { tbody.innerHTML = `<tr><td colspan="11" class="empty-state">No bookings found.</td></tr>`; return; }
+  tbody.innerHTML = bookings.map(b => `
+    <tr>
+      <td><code style="font-size:0.78rem;background:var(--gray-100);padding:2px 6px;border-radius:4px;">${b.bookingId}</code></td>
+      <td><strong>${b.name}</strong><br><span style="font-size:0.78rem;color:var(--gray-600);">${b.email}</span></td>
+      <td>${b.phone}</td>
+      <td>${TENT_NAMES[b.tentType]||b.tentType}</td>
+      <td style="white-space:nowrap;font-size:0.82rem;">${fmt(b.startDate)}<br>${fmt(b.endDate)}</td>
+      <td>${b.numberOfTents}</td>
+      <td><strong>₹${(b.totalPrice||0).toLocaleString('en-IN')}</strong>${b.paymentAmount>0?`<br><span style="font-size:0.75rem;color:var(--green);">Paid: ₹${b.paymentAmount}</span>`:''}</td>
+      <td>${b.deliveryOption==='delivery'?'🚚 Delivery':'🏪 Pickup'}${b.address?`<br><span style="font-size:0.75rem;color:var(--gray-600);">${b.address.substring(0,30)}…</span>`:''}</td>
+      <td>${sb(b.status)}</td>
+      <td>${pb(b.paymentStatus)}</td>
+      <td style="white-space:nowrap;">
+        <button class="action-btn btn-edit" onclick="openEdit('${b.bookingId}','${b.status}','${b.paymentStatus}',${b.paymentAmount||0},'${(b.adminNotes||'').replace(/'/g,"\\'")}')">✏️ Edit</button>
+        <button class="action-btn btn-del" style="margin-top:4px;" onclick="deleteBooking('${b.bookingId}')">🗑️ Del</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── Load Users ──
+async function loadUsers() {
+  try {
+    const res = await fetch(`${API}/api/users`, { headers: { 'Authorization': `Bearer ${token}` } });
+    const data = await res.json();
+    if (!data.success) return;
+    document.getElementById('userCount').textContent = `${data.count} user(s)`;
+    const tbody = document.getElementById('usersBody');
+    if (!data.users.length) { tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No users yet.</td></tr>`; return; }
+    tbody.innerHTML = data.users.map(u => `
+      <tr>
+        <td><strong>${u.name}</strong></td>
+        <td>${u.email}</td>
+        <td>${u.phone}</td>
+        <td><span class="status-badge ${u.role==='admin'?'status-confirmed':'status-pending'}">${u.role}</span></td>
+        <td style="font-size:0.82rem;">${fmt(u.createdAt)}</td>
+        <td><button class="action-btn btn-del" onclick="deleteUser('${u._id}','${u.name}')">🗑️ Delete</button></td>
+      </tr>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+// ── Edit Booking Modal ──
+function openEdit(id, status, payment, amount, notes) {
+  document.getElementById('editBookingId').value = id;
+  document.getElementById('editStatus').value = status;
+  document.getElementById('editPayment').value = payment;
+  document.getElementById('editAmount').value = amount;
+  document.getElementById('editNotes').value = notes;
+  document.getElementById('editModal').classList.add('open');
+}
+function closeEdit() { document.getElementById('editModal').classList.remove('open'); }
+
+async function saveBooking() {
+  const id = document.getElementById('editBookingId').value;
+  const body = {
+    status: document.getElementById('editStatus').value,
+    paymentStatus: document.getElementById('editPayment').value,
+    paymentAmount: parseFloat(document.getElementById('editAmount').value) || 0,
+    adminNotes: document.getElementById('editNotes').value
+  };
+  try {
+    const res = await fetch(`${API}/api/bookings/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token}` },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('Booking updated successfully!', 'success');
+      closeEdit();
+      loadAllBookings();
+      loadStats();
+    } else {
+      showAlert(data.message || 'Update failed.', 'error');
+    }
+  } catch(e) { showAlert('Server error.', 'error'); }
+}
+
+async function deleteBooking(id) {
+  if (!confirm(`Delete booking ${id}? This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`${API}/api/bookings/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (data.success) { showAlert('Booking deleted.', 'success'); loadAllBookings(); loadStats(); }
+    else showAlert(data.message, 'error');
+  } catch(e) { showAlert('Server error.', 'error'); }
+}
+
+async function deleteUser(id, name) {
+  if (!confirm(`Delete user "${name}"? This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`${API}/api/users/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (data.success) { showAlert('User deleted.', 'success'); loadUsers(); }
+    else showAlert(data.message, 'error');
+  } catch(e) { showAlert('Server error.', 'error'); }
+}
+
+// Close modal on outside click
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) closeEdit();
+});
+
+// Init
+loadStats();
+</script>
+</body>
+</html>

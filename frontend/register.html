@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register – Hyderabad Camping Tent Rentals</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.auth-page { min-height:100vh; background:linear-gradient(135deg,var(--gray-900) 0%,#1A3A5C 100%); display:flex; align-items:center; justify-content:center; padding:24px; }
+.auth-card { background:var(--white); border-radius:var(--radius-lg); padding:48px 44px; width:100%; max-width:480px; box-shadow:var(--shadow-lg); animation:fadeInUp 0.5s ease both; }
+.auth-logo { text-align:center; margin-bottom:32px; }
+.auth-logo-icon { width:56px; height:56px; background:linear-gradient(135deg,var(--blue),var(--blue-dark)); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; margin:0 auto 12px; box-shadow:0 4px 16px rgba(58,110,165,0.3); }
+.auth-title { font-family:var(--font-display); font-size:1.7rem; font-weight:800; color:var(--gray-900); margin-bottom:6px; }
+.auth-sub { color:var(--gray-600); font-size:0.9rem; }
+.auth-form { display:flex; flex-direction:column; gap:16px; }
+.auth-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.auth-input-group { display:flex; flex-direction:column; gap:6px; }
+.auth-input-group label { font-size:0.83rem; font-weight:600; color:var(--gray-900); }
+.auth-input-group input { background:var(--gray-50); border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:13px 16px; font-size:0.95rem; font-family:var(--font-body); outline:none; transition:border-color 0.2s,box-shadow 0.2s; width:100%; }
+.auth-input-group input:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(58,110,165,0.1); background:var(--white); }
+.auth-input-group input.error { border-color:#E74C3C; background:#FFF5F5; }
+.auth-err { font-size:0.78rem; color:#E74C3C; display:none; }
+.auth-err.show { display:block; }
+.auth-alert { padding:12px 16px; border-radius:var(--radius-sm); font-size:0.88rem; font-weight:500; display:none; margin-bottom:4px; }
+.auth-alert.error { background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; display:block; }
+.auth-alert.success { background:#F0FDF4; color:#16A34A; border:1px solid #BBF7D0; display:block; }
+.auth-divider { text-align:center; color:var(--gray-400); font-size:0.85rem; margin-top:16px; }
+.auth-link { color:var(--blue); font-weight:600; text-decoration:none; }
+.auth-link:hover { text-decoration:underline; }
+.back-home { display:block; text-align:center; margin-top:16px; color:var(--gray-400); font-size:0.85rem; text-decoration:none; }
+.back-home:hover { color:var(--blue); }
+.password-wrap { position:relative; }
+.password-wrap input { padding-right:44px; }
+.toggle-pw { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:1rem; color:var(--gray-400); padding:0; }
+.pw-strength { height:4px; border-radius:2px; margin-top:6px; transition:all 0.3s; background:var(--gray-200); }
+.pw-strength.weak { background:#EF4444; width:33%; }
+.pw-strength.medium { background:#F59E0B; width:66%; }
+.pw-strength.strong { background:#10B981; width:100%; }
+@media(max-width:480px){ .auth-row { grid-template-columns:1fr; } .auth-card { padding:32px 24px; } }
+</style>
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">⛺</div>
+      <div class="auth-title">Create Account</div>
+      <div class="auth-sub">Join to book tents and track your rentals</div>
+    </div>
+
+    <div class="auth-alert" id="authAlert"></div>
+
+    <form class="auth-form" id="registerForm" novalidate>
+      <div class="auth-row">
+        <div class="auth-input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Your name" autocomplete="name">
+          <span class="auth-err" id="nameErr"></span>
+        </div>
+        <div class="auth-input-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
+          <span class="auth-err" id="phoneErr"></span>
+        </div>
+      </div>
+      <div class="auth-input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <span class="auth-err" id="emailErr"></span>
+      </div>
+      <div class="auth-input-group">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password">
+          <button type="button" class="toggle-pw" onclick="togglePw('password')">👁️</button>
+        </div>
+        <div class="pw-strength" id="pwStrength"></div>
+        <span class="auth-err" id="passwordErr"></span>
+      </div>
+      <div class="auth-input-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-wrap">
+          <input type="password" id="confirmPassword" placeholder="Re-enter password" autocomplete="new-password">
+          <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword')">👁️</button>
+        </div>
+        <span class="auth-err" id="confirmErr"></span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" id="registerBtn" style="width:100%;justify-content:center;margin-top:4px;">
+        Create Account
+      </button>
+    </form>
+
+    <div class="auth-divider">Already have an account? <a href="/login" class="auth-link">Sign in</a></div>
+    <a href="/" class="back-home">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin;
+
+// Redirect if already logged in
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+if (token && user) window.location.href = user.role === 'admin' ? '/admin' : '/dashboard';
+
+function togglePw(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+// Password strength indicator
+document.getElementById('password').addEventListener('input', function() {
+  const val = this.value;
+  const bar = document.getElementById('pwStrength');
+  if (!val) { bar.className = 'pw-strength'; return; }
+  if (val.length < 6) bar.className = 'pw-strength weak';
+  else if (val.length < 10) bar.className = 'pw-strength medium';
+  else bar.className = 'pw-strength strong';
+});
+
+function showAlert(msg, type) {
+  const el = document.getElementById('authAlert');
+  el.textContent = msg; el.className = 'auth-alert ' + type;
+}
+
+function clearErrors() {
+  ['name','phone','email','password','confirm'].forEach(f => {
+    const err = document.getElementById(f + 'Err');
+    if (err) { err.classList.remove('show'); err.textContent = ''; }
+    const inp = document.getElementById(f === 'confirm' ? 'confirmPassword' : f);
+    if (inp) inp.classList.remove('error');
+  });
+  document.getElementById('authAlert').className = 'auth-alert';
+}
+
+function setErr(field, msg) {
+  const errId = field === 'confirmPassword' ? 'confirmErr' : field + 'Err';
+  const err = document.getElementById(errId);
+  const inp = document.getElementById(field);
+  if (err) { err.textContent = msg; err.classList.add('show'); }
+  if (inp) inp.classList.add('error');
+}
+
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearErrors();
+
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const btn = document.getElementById('registerBtn');
+
+  let valid = true;
+  if (!name) { setErr('name', 'Name is required.'); valid = false; }
+  if (!phone) { setErr('phone', 'Phone is required.'); valid = false; }
+  if (!email || !/^\S+@\S+\.\S+$/.test(email)) { setErr('email', 'Valid email is required.'); valid = false; }
+  if (!password || password.length < 6) { setErr('password', 'Password must be at least 6 characters.'); valid = false; }
+  if (password !== confirmPassword) { setErr('confirmPassword', 'Passwords do not match.'); valid = false; }
+  if (!valid) return;
+
+  btn.disabled = true; btn.textContent = 'Creating account…';
+
+  try {
+    const res = await fetch(`${API}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, email, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      showAlert('Account created! Redirecting…', 'success');
+      setTimeout(() => window.location.href = '/dashboard', 800);
+    } else {
+      showAlert(data.message || 'Registration failed.', 'error');
+    }
+  } catch (err) {
+    showAlert('Cannot connect to server. Please try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+});
+</script>
+</body>
+</html>

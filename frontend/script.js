@@ -195,9 +195,13 @@ if (bookingForm) {
     Object.keys(fields).forEach(k => { if (fields[k]) payload[k] = fields[k].value; });
 
     try {
+      const authToken = localStorage.getItem('token');
       const res = await fetch(`${API}/api/bookings`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
+        },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -255,4 +259,56 @@ function showAlert(msg, type = 'info') {
   div.textContent = msg;
   document.body.appendChild(div);
   setTimeout(() => div.remove(), 5000);
+}
+
+// ── Auth-aware Navbar ──
+(function() {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const navActions = document.querySelector('.nav-actions');
+  if (!navActions) return;
+
+  if (token && user) {
+    navActions.innerHTML = `
+      <span style="font-size:0.85rem;font-weight:600;color:var(--gray-600);">👤 ${user.name.split(' ')[0]}</span>
+      <a href="${user.role === 'admin' ? '/admin' : '/dashboard'}" class="btn btn-outline btn-sm">
+        ${user.role === 'admin' ? '⚙️ Admin' : '📋 My Bookings'}
+      </a>
+      <button class="btn btn-sm" style="background:#FEE2E2;color:#DC2626;border:none;" onclick="authLogout()">Sign Out</button>`;
+  } else {
+    navActions.innerHTML = `
+      <a href="/login" class="btn btn-outline btn-sm">Sign In</a>
+      <a href="/booking" class="btn btn-primary btn-sm">Book a Tent</a>`;
+  }
+
+  // Also update mobile menu
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu) {
+    const existingAuth = mobileMenu.querySelector('.mobile-auth');
+    if (!existingAuth) {
+      const div = document.createElement('div');
+      div.className = 'mobile-auth';
+      if (token && user) {
+        div.innerHTML = `<a href="${user.role === 'admin' ? '/admin' : '/dashboard'}" class="btn btn-primary" style="margin-top:8px;">${user.role === 'admin' ? '⚙️ Admin Panel' : '📋 My Bookings'}</a>`;
+      } else {
+        div.innerHTML = `<a href="/login" class="btn btn-outline" style="margin-top:8px;">Sign In</a><a href="/register" class="btn btn-primary" style="margin-top:8px;">Register</a>`;
+      }
+      mobileMenu.appendChild(div);
+    }
+  }
+})();
+
+function authLogout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/';
+}
+
+// ── Booking page auth guard ──
+if (window.location.pathname === '/booking') {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    sessionStorage.setItem('redirectAfterLogin', '/booking');
+    window.location.href = '/login';
+  }
 }

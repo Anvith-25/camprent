@@ -315,3 +315,85 @@ Update booking status.
 ---
 
 © 2025 Hyderabad Camping Tent Rentals
+
+---
+
+## 🔐 Authentication System (v2)
+
+The platform now has full JWT-based authentication with two roles.
+
+### User Roles
+
+| Role     | Access |
+|----------|--------|
+| customer | Register, Login, Book tents, View **own** bookings only |
+| admin    | Everything above + View ALL bookings, Update status, Payment tracking, Delete bookings, Manage users |
+
+---
+
+### New Pages
+
+| Page        | URL          | Who Can Access |
+|-------------|--------------|----------------|
+| Login       | /login       | Everyone       |
+| Register    | /register    | Everyone       |
+| Dashboard   | /dashboard   | Customers only |
+| Admin Panel | /admin       | Admins only    |
+
+---
+
+### New API Endpoints
+
+#### Auth
+```
+POST /api/auth/register   — Create new customer account
+POST /api/auth/login      — Login, returns JWT token
+GET  /api/auth/me         — Get current logged-in user (requires token)
+POST /api/auth/logout     — Logout
+```
+
+#### Users (Admin only)
+```
+GET    /api/users          — Get all users
+PATCH  /api/users/:id/role — Change user role
+DELETE /api/users/:id      — Delete user
+```
+
+#### Bookings (Updated)
+```
+POST   /api/bookings       — Create booking (login required)
+GET    /api/bookings       — Admin: all bookings | Customer: own bookings only
+GET    /api/bookings/stats — Admin dashboard stats
+GET    /api/bookings/:id   — Get single booking
+PATCH  /api/bookings/:id   — Update booking (admin only)
+DELETE /api/bookings/:id   — Delete booking (admin only)
+```
+
+---
+
+### New Railway Environment Variables
+
+Add these to Railway Variables tab:
+
+```
+JWT_SECRET      = any_long_random_string_here_eg_camprent2025xyz
+JWT_EXPIRE      = 7d
+ADMIN_EMAIL     = admin@camprent.com
+ADMIN_PASSWORD  = Admin@2025
+```
+
+> ⚠️ Change ADMIN_EMAIL and ADMIN_PASSWORD to your own values before deploying!
+
+---
+
+### Default Admin Login
+
+On first server start, an admin account is auto-created:
+
+```
+Email:    admin@camprent.com   (or your ADMIN_EMAIL)
+Password: Admin@2025           (or your ADMIN_PASSWORD)
+```
+
+Go to `/login` and sign in with these credentials to access `/admin`.
+

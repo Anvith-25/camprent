@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard – Hyderabad Camping Tent Rentals</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body { background: var(--gray-50); }
+.dash-nav { background:var(--white); border-bottom:1px solid var(--gray-200); padding:0 5%; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:var(--shadow-xs); }
+.dash-nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.dash-nav-logo-mark { width:34px; height:34px; background:var(--blue); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+.dash-nav-logo-text { font-family:var(--font-display); font-size:1rem; font-weight:800; color:var(--gray-900); }
+.dash-nav-logo-text span { color:var(--blue); }
+.dash-nav-right { display:flex; align-items:center; gap:14px; }
+.user-chip { display:flex; align-items:center; gap:8px; background:var(--blue-light); border-radius:50px; padding:6px 14px; font-size:0.85rem; font-weight:600; color:var(--blue); }
+.dash-layout { max-width:1100px; margin:0 auto; padding:40px 24px; }
+.dash-header { margin-bottom:36px; }
+.dash-header h1 { font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--gray-900); margin-bottom:6px; }
+.dash-header p { color:var(--gray-600); }
+.stat-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:36px; }
+.stat-card { background:var(--white); border-radius:var(--radius); padding:22px; border:1.5px solid var(--gray-100); box-shadow:var(--shadow-xs); }
+.stat-card-icon { font-size:1.6rem; margin-bottom:10px; }
+.stat-card-num { font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--gray-900); }
+.stat-card-label { font-size:0.82rem; color:var(--gray-600); margin-top:2px; }
+.section-card { background:var(--white); border-radius:var(--radius-lg); border:1.5px solid var(--gray-100); box-shadow:var(--shadow-xs); margin-bottom:24px; overflow:hidden; }
+.section-card-header { padding:20px 24px; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; justify-content:space-between; }
+.section-card-header h2 { font-family:var(--font-display); font-size:1.1rem; font-weight:800; color:var(--gray-900); }
+.booking-table { width:100%; border-collapse:collapse; }
+.booking-table th { padding:12px 16px; text-align:left; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-400); background:var(--gray-50); border-bottom:1px solid var(--gray-100); }
+.booking-table td { padding:14px 16px; font-size:0.88rem; border-bottom:1px solid var(--gray-100); color:var(--gray-900); vertical-align:middle; }
+.booking-table tr:last-child td { border-bottom:none; }
+.booking-table tr:hover td { background:var(--gray-50); }
+.status-badge { display:inline-block; padding:3px 10px; border-radius:50px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+.status-pending { background:#FEF3C7; color:#D97706; }
+.status-confirmed { background:#D1FAE5; color:#059669; }
+.status-cancelled { background:#FEE2E2; color:#DC2626; }
+.status-completed { background:#DBEAFE; color:#2563EB; }
+.pay-unpaid { background:#FEF3C7; color:#D97706; }
+.pay-paid { background:#D1FAE5; color:#059669; }
+.pay-partial { background:#E0E7FF; color:#4F46E5; }
+.empty-state { text-align:center; padding:60px 24px; color:var(--gray-400); }
+.empty-state-icon { font-size:3rem; margin-bottom:12px; }
+.empty-state p { margin-bottom:20px; }
+.quick-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:36px; }
+.quick-action { background:var(--white); border-radius:var(--radius); padding:22px; border:1.5px solid var(--gray-100); text-decoration:none; display:flex; align-items:center; gap:14px; transition:all 0.2s; box-shadow:var(--shadow-xs); }
+.quick-action:hover { border-color:var(--blue); transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.qa-icon { width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.qa-text strong { display:block; font-size:0.92rem; font-weight:700; color:var(--gray-900); margin-bottom:2px; }
+.qa-text span { font-size:0.8rem; color:var(--gray-600); }
+.loading { text-align:center; padding:40px; color:var(--gray-400); }
+@media(max-width:768px){ .stat-cards{grid-template-columns:1fr 1fr;} .quick-actions{grid-template-columns:1fr;} .booking-table thead{display:none;} .booking-table tr{display:block;padding:12px 16px;border-bottom:1px solid var(--gray-100);} .booking-table td{display:flex;justify-content:space-between;padding:4px 0;border:none;font-size:0.85rem;} .booking-table td::before{content:attr(data-label);font-weight:600;color:var(--gray-600);} }
+</style>
+</head>
+<body>
+
+<nav class="dash-nav">
+  <a href="/" class="dash-nav-logo">
+    <div class="dash-nav-logo-mark">⛺</div>
+    <div class="dash-nav-logo-text">Hyd <span>Camp</span></div>
+  </a>
+  <div class="dash-nav-right">
+    <div class="user-chip">👤 <span id="userName">Loading…</span></div>
+    <a href="/tents" class="btn btn-outline btn-sm">Browse Tents</a>
+    <button class="btn btn-sm" style="background:#FEE2E2;color:#DC2626;border:none;" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="dash-layout">
+  <div class="dash-header">
+    <h1>My Dashboard</h1>
+    <p>Track your tent bookings and rental history</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-cards" id="statCards">
+    <div class="stat-card"><div class="stat-card-icon">📋</div><div class="stat-card-num" id="sc-total">–</div><div class="stat-card-label">Total Bookings</div></div>
+    <div class="stat-card"><div class="stat-card-icon">⏳</div><div class="stat-card-num" id="sc-pending">–</div><div class="stat-card-label">Pending</div></div>
+    <div class="stat-card"><div class="stat-card-icon">✅</div><div class="stat-card-num" id="sc-confirmed">–</div><div class="stat-card-label">Confirmed</div></div>
+    <div class="stat-card"><div class="stat-card-icon">💰</div><div class="stat-card-num" id="sc-spent">–</div><div class="stat-card-label">Total Spent</div></div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <a href="/booking" class="quick-action">
+      <div class="qa-icon" style="background:var(--blue-light);">⛺</div>
+      <div class="qa-text"><strong>Book a Tent</strong><span>Reserve for your next trip</span></div>
+    </a>
+    <a href="/tents" class="quick-action">
+      <div class="qa-icon" style="background:var(--orange-lt);">🔍</div>
+      <div class="qa-text"><strong>Browse Catalog</strong><span>View all available tents</span></div>
+    </a>
+    <a href="tel:+919381704244" class="quick-action">
+      <div class="qa-icon" style="background:var(--green-lt);">📞</div>
+      <div class="qa-text"><strong>Call Us</strong><span>+91 93817 04244</span></div>
+    </a>
+  </div>
+
+  <!-- Bookings Table -->
+  <div class="section-card">
+    <div class="section-card-header">
+      <h2>📋 My Bookings</h2>
+      <a href="/booking" class="btn btn-primary btn-sm">+ New Booking</a>
+    </div>
+    <div id="bookingsContainer">
+      <div class="loading">Loading your bookings…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = window.location.origin;
+
+// Auth check
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+if (!token || !user) { window.location.href = '/login'; }
+if (user?.role === 'admin') { window.location.href = '/admin'; }
+
+document.getElementById('userName').textContent = user?.name || 'Customer';
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/login';
+}
+
+const TENT_NAMES = { explorer: 'Explorer (2P)', adventure: 'Adventure (4P)', family: 'Family Dome (6P)' };
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function statusBadge(s) {
+  return `<span class="status-badge status-${s}">${s}</span>`;
+}
+function payBadge(s) {
+  return `<span class="status-badge pay-${s}">${s}</span>`;
+}
+
+async function loadBookings() {
+  try {
+    const res = await fetch(`${API}/api/bookings`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      if (res.status === 401) { logout(); return; }
+      throw new Error(data.message);
+    }
+
+    const bookings = data.bookings;
+
+    // Update stats
+    document.getElementById('sc-total').textContent = bookings.length;
+    document.getElementById('sc-pending').textContent = bookings.filter(b => b.status === 'pending').length;
+    document.getElementById('sc-confirmed').textContent = bookings.filter(b => b.status === 'confirmed').length;
+    const spent = bookings.filter(b => b.paymentStatus === 'paid').reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+    document.getElementById('sc-spent').textContent = spent > 0 ? `₹${spent.toLocaleString('en-IN')}` : '₹0';
+
+    const container = document.getElementById('bookingsContainer');
+    if (bookings.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">⛺</div>
+          <p>You haven't made any bookings yet.</p>
+          <a href="/booking" class="btn btn-primary">Book Your First Tent</a>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = `
+      <div style="overflow-x:auto;">
+        <table class="booking-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Tent</th>
+              <th>Dates</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Payment</th>
+              <th>Delivery</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bookings.map(b => `
+              <tr>
+                <td data-label="Booking ID"><code style="font-size:0.8rem;background:var(--gray-100);padding:2px 7px;border-radius:4px;">${b.bookingId}</code></td>
+                <td data-label="Tent">${TENT_NAMES[b.tentType] || b.tentType}</td>
+                <td data-label="Dates">${formatDate(b.startDate)} → ${formatDate(b.endDate)}</td>
+                <td data-label="Qty">${b.numberOfTents}</td>
+                <td data-label="Total"><strong>₹${(b.totalPrice || 0).toLocaleString('en-IN')}</strong></td>
+                <td data-label="Status">${statusBadge(b.status)}</td>
+                <td data-label="Payment">${payBadge(b.paymentStatus)}</td>
+                <td data-label="Delivery">${b.deliveryOption === 'delivery' ? '🚚 Delivery' : '🏪 Pickup'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  } catch (err) {
+    document.getElementById('bookingsContainer').innerHTML = `<div class="empty-state"><p>Failed to load bookings. Please refresh.</p></div>`;
+  }
+}
+
+loadBookings();
+</script>
+</body>
+</html>
