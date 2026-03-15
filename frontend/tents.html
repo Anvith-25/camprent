@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tent Catalog – Hyderabad Camping Tent Rentals</title>
+<meta name="description" content="Browse our range of camping tents available for rent in Hyderabad. Explorer 2-person, Adventure 4-person, and Family Dome 6-person tents.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">⛺</div>
+      <div class="nav-logo-text">Hyd <span>Camp</span> Rentals</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/tents" class="active">Tent Catalog</a></li>
+      <li><a href="/booking">Book a Tent</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+919381704244" class="btn btn-outline btn-sm">📞 Call Now</a>
+      <a href="/booking" class="btn btn-primary btn-sm">Book a Tent</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Home</a>
+  <a href="/tents">Tent Catalog</a>
+  <a href="/booking">Book a Tent</a>
+  <a href="/#contact">Contact</a>
+  <a href="tel:+919381704244" class="btn btn-outline">📞 Call Now</a>
+  <a href="/booking" class="btn btn-primary">Book a Tent</a>
+</div>
+
+<!-- CATALOG HERO -->
+<section class="catalog-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span>Tent Catalog</span>
+    </div>
+    <span class="chip">Our Inventory</span>
+    <h1 class="page-hero-title">Tent Catalog</h1>
+    <p class="page-hero-sub">All tents cleaned, inspected, and ready for adventure. Flexible daily and weekly rental rates with delivery across Hyderabad.</p>
+  </div>
+</section>
+
+<!-- CATALOG GRID -->
+<section class="section" style="background:var(--white);">
+  <div class="container">
+    <div id="tentsContainer" class="catalog-grid">
+      <!-- Populated by JS or static below -->
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section" style="background:var(--gray-50);">
+  <div class="container">
+    <div class="text-center">
+      <span class="chip">Quick Compare</span>
+      <h2 class="section-heading">Side-by-Side Comparison</h2>
+      <p class="section-sub">Find the right tent for your group size and budget at a glance.</p>
+    </div>
+    <div style="overflow-x:auto;margin-top:48px;">
+      <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);">
+        <thead>
+          <tr style="background:var(--gray-900);color:white;">
+            <th style="padding:18px 24px;text-align:left;font-family:var(--font-display);font-weight:700;">Feature</th>
+            <th style="padding:18px 24px;text-align:center;color:#5B8FCA;">Explorer Tent</th>
+            <th style="padding:18px 24px;text-align:center;color:#F39C12;background:rgba(243,156,18,0.1);">Adventure Tent</th>
+            <th style="padding:18px 24px;text-align:center;color:#27AE60;">Family Dome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:16px 24px;font-weight:600;">Capacity</td>
+            <td style="padding:16px 24px;text-align:center;">2 Person</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">4 Person</td>
+            <td style="padding:16px 24px;text-align:center;">6 Person</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50);">
+            <td style="padding:16px 24px;font-weight:600;">Price / Day</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹399</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;background:rgba(243,156,18,0.04);">₹699</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹999</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:16px 24px;font-weight:600;">Price / Week</td>
+            <td style="padding:16px 24px;text-align:center;">₹1,999</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">₹3,499</td>
+            <td style="padding:16px 24px;text-align:center;">₹4,999</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50);">
+            <td style="padding:16px 24px;font-weight:600;">Waterproof</td>
+            <td style="padding:16px 24px;text-align:center;">✅</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">✅</td>
+            <td style="padding:16px 24px;text-align:center;">✅</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:16px 24px;font-weight:600;">Separate Rooms</td>
+            <td style="padding:16px 24px;text-align:center;">❌</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">❌</td>
+            <td style="padding:16px 24px;text-align:center;">✅ (3 rooms)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50);">
+            <td style="padding:16px 24px;font-weight:600;">Standing Height</td>
+            <td style="padding:16px 24px;text-align:center;">❌</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">❌</td>
+            <td style="padding:16px 24px;text-align:center;">✅</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--gray-100);">
+            <td style="padding:16px 24px;font-weight:600;">Best For</td>
+            <td style="padding:16px 24px;text-align:center;font-size:0.9rem;color:var(--gray-600);">Solo / Couple</td>
+            <td style="padding:16px 24px;text-align:center;font-size:0.9rem;color:var(--gray-600);background:rgba(243,156,18,0.04);">Friend Groups</td>
+            <td style="padding:16px 24px;text-align:center;font-size:0.9rem;color:var(--gray-600);">Families</td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px;font-weight:600;"></td>
+            <td style="padding:16px 24px;text-align:center;">
+              <a href="/booking" class="btn btn-primary btn-sm">Rent This</a>
+            </td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">
+              <a href="/booking" class="btn btn-orange btn-sm">Rent This</a>
+            </td>
+            <td style="padding:16px 24px;text-align:center;">
+              <a href="/booking" class="btn btn-sm" style="background:#27AE60;color:white;">Rent This</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <h2>Found the Perfect Tent?<br>Book it Now.</h2>
+    <div class="cta-band-btns">
+      <a href="/booking" class="btn btn-orange btn-lg">⛺ Book a Tent Now</a>
+      <a href="tel:+919381704244" class="btn btn-ghost btn-lg">📞 +91 93817 04244</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-nav-logo">
+          <div class="footer-nav-logo-mark">⛺</div>
+          <div class="footer-nav-logo-text">Hyd <span>Camp</span> Rentals</div>
+        </div>
+        <p>Hyderabad's trusted camping tent rental service. Premium gear, flexible plans, and reliable delivery across Telangana.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn">📘</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="https://wa.me/919381704244" class="social-btn">💬</a>
+          <a href="#" class="social-btn">▶️</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/tents">Tent Catalog</a></li>
+          <li><a href="/booking">Book a Tent</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#">Tent Rentals</a></li>
+          <li><a href="#">Sleeping Bags</a></li>
+          <li><a href="#">Camping Gear</a></li>
+          <li><a href="#">Home Delivery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-line">📞 <span><strong>+91 93817 04244</strong></span></div>
+        <div class="footer-contact-line">📍 <span><strong>Hyderabad, Telangana</strong></span></div>
+        <div class="footer-contact-line">⏰ <span><strong>8 AM – 9 PM Daily</strong></span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Hyderabad Camping Tent Rentals. All rights reserved.</span>
+      <span>Made with ⛺ in Hyderabad</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// Render tent cards dynamically (or fall back to static)
+const tentSVGs = {
+  explorer: `<svg viewBox="0 0 280 200" width="240" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="140,25 40,165 240,165" fill="#3A6EA5" stroke="#5B8FCA" stroke-width="1.5"/>
+    <polygon points="140,25 100,165 180,165" fill="#2D5A8A"/>
+    <rect x="116" y="118" width="48" height="47" fill="#1E3D5C" rx="3"/>
+    <polygon points="116,118 140,85 164,118" fill="#2D5A8A"/>
+    <line x1="140" y1="118" x2="140" y2="165" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <line x1="40" y1="165" x2="24" y2="178" stroke="#A97B4A" stroke-width="2"/>
+    <line x1="240" y1="165" x2="256" y2="178" stroke="#A97B4A" stroke-width="2"/>
+  </svg>`,
+  adventure: `<svg viewBox="0 0 280 200" width="240" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="140,18 30,165 250,165" fill="#E67E22" stroke="#F39C12" stroke-width="2"/>
+    <polygon points="140,18 90,165 190,165" fill="#C45A00"/>
+    <rect x="110" y="110" width="60" height="55" fill="#8B3A00" rx="3"/>
+    <polygon points="110,110 140,72 170,110" fill="#C45A00"/>
+    <line x1="140" y1="110" x2="140" y2="165" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <line x1="30" y1="165" x2="12" y2="180" stroke="#A97B4A" stroke-width="2"/>
+    <line x1="250" y1="165" x2="268" y2="180" stroke="#A97B4A" stroke-width="2"/>
+  </svg>`,
+  family: `<svg viewBox="0 0 280 200" width="240" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30,165 Q30,60 140,50 Q250,60 250,165 Z" fill="#27AE60" stroke="#2ECC71" stroke-width="1.5"/>
+    <path d="M68,165 Q68,80 140,72 Q212,80 212,165 Z" fill="#1E8A4C"/>
+    <rect x="108" y="118" width="64" height="47" fill="#145C30" rx="3"/>
+    <path d="M108,118 Q140,88 172,118 Z" fill="#1E8A4C"/>
+    <line x1="140" y1="118" x2="140" y2="165" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <rect x="46" y="122" width="30" height="22" fill="rgba(255,255,255,0.08)" rx="4" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+    <rect x="204" y="122" width="30" height="22" fill="rgba(255,255,255,0.08)" rx="4" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+    <line x1="30" y1="165" x2="14" y2="178" stroke="#A97B4A" stroke-width="2"/>
+    <line x1="250" y1="165" x2="266" y2="178" stroke="#A97B4A" stroke-width="2"/>
+  </svg>`
+};
+const bgColors = {
+  explorer: 'linear-gradient(160deg,#1A3A5C,#243447)',
+  adventure: 'linear-gradient(160deg,#4A2000,#2D1500)',
+  family: 'linear-gradient(160deg,#0D3320,#1A5C34)'
+};
+const badgeColors = {
+  explorer: '#3A6EA5', adventure: '#F39C12', family: '#27AE60'
+};
+const rentBtns = {
+  explorer: 'btn-primary',
+  adventure: 'btn-orange',
+  family: ''
+};
+const rentBtnStyles = {
+  explorer: '',
+  adventure: '',
+  family: 'background:#27AE60;color:white;box-shadow:0 4px 18px rgba(39,174,96,0.3);'
+};
+
+async function loadTents() {
+  const container = document.getElementById('tentsContainer');
+  try {
+    const res = await fetch('/api/tents');
+    const data = await res.json();
+    if (data.success && data.tents.length) {
+      container.innerHTML = data.tents.map(t => renderTentCard(t)).join('');
+      // trigger reveal
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.08}s`;
+        setTimeout(() => el.classList.add('visible'), 100 + i * 80);
+      });
+    }
+  } catch (e) {
+    container.innerHTML = fallbackCards();
+  }
+}
+
+function renderTentCard(t) {
+  const svg = tentSVGs[t.id] || '';
+  const bg = bgColors[t.id] || '#1A3A5C';
+  return `
+  <div class="tent-card reveal">
+    <div class="tent-img-wrap" style="background:${bg};">
+      <span class="tent-card-badge" style="background:${badgeColors[t.id]};color:white;">${t.badge}</span>
+      ${svg}
+    </div>
+    <div class="tent-body">
+      <h3>${t.name}</h3>
+      <span class="tent-capacity-tag">👥 ${t.capacity} Person</span>
+      <div class="tent-features">
+        ${t.features.map(f => `<span class="tent-feature-tag">${f}</span>`).join('')}
+      </div>
+      <p>${t.description}</p>
+      <div class="tent-pricing">
+        <div class="tent-price-box">
+          <div class="tpb-label">Per Day</div>
+          <div class="tpb-price">₹${t.pricePerDay.toLocaleString('en-IN')}<small>/day</small></div>
+        </div>
+        <div class="tent-price-box">
+          <div class="tpb-label">Per Week</div>
+          <div class="tpb-price">₹${t.pricePerWeek.toLocaleString('en-IN')}<small>/wk</small></div>
+        </div>
+      </div>
+      <a href="/booking" class="btn ${rentBtns[t.id]}" style="width:100%;justify-content:center;${rentBtnStyles[t.id]}">Rent Now →</a>
+    </div>
+  </div>`;
+}
+
+function fallbackCards() {
+  return `<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--gray-600);">
+    <div style="font-size:2rem;margin-bottom:12px;">⛺</div>
+    <p>Unable to load tents. Please start the backend server.</p>
+    <a href="/booking" class="btn btn-primary" style="margin-top:20px;">Book Directly</a>
+  </div>`;
+}
+
+loadTents();
+</script>
+</body>
+</html>

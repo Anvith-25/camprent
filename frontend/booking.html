@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Tent – Hyderabad Camping Tent Rentals</title>
+<meta name="description" content="Book a camping tent for rent in Hyderabad. Fill out our simple booking form and get confirmation instantly.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">⛺</div>
+      <div class="nav-logo-text">Hyd <span>Camp</span> Rentals</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/tents">Tent Catalog</a></li>
+      <li><a href="/booking" class="active">Book a Tent</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+919381704244" class="btn btn-outline btn-sm">📞 Call Now</a>
+      <a href="/tents" class="btn btn-primary btn-sm">View Tents</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Home</a>
+  <a href="/tents">Tent Catalog</a>
+  <a href="/booking">Book a Tent</a>
+  <a href="/#contact">Contact</a>
+  <a href="tel:+919381704244" class="btn btn-outline">📞 Call Now</a>
+</div>
+
+<!-- BOOKING HERO -->
+<section class="booking-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/tents">Tents</a>
+      <span>›</span>
+      <span>Book a Tent</span>
+    </div>
+    <span class="chip">Online Booking</span>
+    <h1 class="page-hero-title">Book Your Tent</h1>
+    <p class="page-hero-sub">Fill in the details below. We'll confirm your booking within a few hours and reach out before delivery.</p>
+  </div>
+</section>
+
+<!-- BOOKING SECTION -->
+<section class="section" style="background:var(--gray-50);">
+  <div class="container">
+    <div class="booking-layout">
+
+      <!-- FORM -->
+      <div class="booking-form-card">
+        <h2 style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-bottom:6px;">Rental Details</h2>
+        <p style="color:var(--gray-600);font-size:0.9rem;margin-bottom:32px;">All fields marked <span style="color:#E74C3C;">*</span> are required.</p>
+
+        <form id="bookingForm" novalidate>
+          <!-- Personal Info -->
+          <div style="margin-bottom:28px;">
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
+              👤 Personal Information
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="name">Full Name <span>*</span></label>
+                <input type="text" id="name" placeholder="Your full name" autocomplete="name">
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number <span>*</span></label>
+                <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group full">
+                <label for="email">Email Address <span>*</span></label>
+                <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+                <span class="form-error"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rental Info -->
+          <div style="margin-bottom:28px;">
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
+              ⛺ Rental Information
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="tentType">Tent Type <span>*</span></label>
+                <select id="tentType">
+                  <option value="" disabled selected>Select a tent</option>
+                  <option value="explorer">Explorer Tent – 2 Person (₹399/day)</option>
+                  <option value="adventure">Adventure Tent – 4 Person (₹699/day)</option>
+                  <option value="family">Family Dome Tent – 6 Person (₹999/day)</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="numberOfTents">Number of Tents <span>*</span></label>
+                <select id="numberOfTents">
+                  <option value="" disabled selected>Select quantity</option>
+                  <option value="1">1 Tent</option>
+                  <option value="2">2 Tents</option>
+                  <option value="3">3 Tents</option>
+                  <option value="4">4 Tents</option>
+                  <option value="5">5 Tents</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="startDate">Rental Start Date <span>*</span></label>
+                <input type="date" id="startDate">
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="endDate">Rental End Date <span>*</span></label>
+                <input type="date" id="endDate">
+                <span class="form-error"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delivery -->
+          <div style="margin-bottom:28px;">
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
+              🚚 Delivery Options
+            </div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="deliveryOption">Delivery Preference <span>*</span></label>
+                <select id="deliveryOption">
+                  <option value="" disabled selected>Choose delivery option</option>
+                  <option value="delivery">🚚 Home / Campsite Delivery (Hyderabad)</option>
+                  <option value="pickup">🏪 Self Pickup from Our Location</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+              <div class="form-group full" id="deliveryAddressGroup">
+                <label for="address">Delivery Address <span>*</span></label>
+                <textarea id="address" placeholder="Enter your full delivery address including area, landmark, and city..." rows="3"></textarea>
+                <span class="form-error"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div style="margin-bottom:32px;">
+            <div class="form-group">
+              <label for="notes">Additional Notes</label>
+              <textarea id="notes" placeholder="Any special requests, camping location details, or questions..." rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div style="background:var(--blue-light);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:28px;font-size:0.85rem;color:var(--blue-dark);line-height:1.6;">
+            <strong>📋 Booking Terms:</strong> A refundable security deposit may be required. Tents must be returned in clean condition. Cancellations 24+ hours before rental start date are fully refundable.
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-orange btn-lg" style="width:100%;justify-content:center;font-size:1rem;">
+            ✅ Confirm Booking
+          </button>
+        </form>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="booking-sidebar-card">
+          <h3>📋 Booking Summary</h3>
+          <div class="summary-row">
+            <span class="label">Tent</span>
+            <span class="value" id="sum-tent">–</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Quantity</span>
+            <span class="value" id="sum-qty">–</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Dates</span>
+            <span class="value" id="sum-dates">–</span>
+          </div>
+          <div class="total-row">
+            <span class="label">Total</span>
+            <span class="value" id="sum-total">–</span>
+          </div>
+          <div class="info-chips">
+            <div class="info-chip">ℹ️ Price calculated at daily rate × quantity × days</div>
+            <div class="info-chip">📞 We'll call to confirm before delivery</div>
+          </div>
+        </div>
+
+        <!-- Contact card -->
+        <div class="booking-sidebar-card" style="margin-top:20px;">
+          <h3>💬 Need Help?</h3>
+          <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:18px;line-height:1.65;">
+            Call or WhatsApp us directly for quick bookings, availability checks, or custom packages.
+          </p>
+          <a href="tel:+919381704244" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">
+            📞 +91 93817 04244
+          </a>
+          <a href="https://wa.me/919381704244" target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;">
+            💬 WhatsApp Us
+          </a>
+        </div>
+
+        <!-- Price reference -->
+        <div class="booking-sidebar-card" style="margin-top:20px;">
+          <h3>💰 Price Reference</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="color:var(--gray-600);">Explorer (2P)</span>
+              <span style="font-weight:700;">₹399/day</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="color:var(--gray-600);">Adventure (4P)</span>
+              <span style="font-weight:700;">₹699/day</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;">
+              <span style="color:var(--gray-600);">Family Dome (6P)</span>
+              <span style="font-weight:700;">₹999/day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <h2>Booking Confirmed!</h2>
+    <p>Your tent rental request has been received. We'll contact you within a few hours to confirm delivery details.</p>
+    <div class="modal-booking-id" id="modal-id">HCR12345</div>
+    <div class="modal-price" id="modal-price"></div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="closeModal()">✅ Done</button>
+      <a href="/tents" class="btn btn-outline">Browse More Tents</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-nav-logo">
+          <div class="footer-nav-logo-mark">⛺</div>
+          <div class="footer-nav-logo-text">Hyd <span>Camp</span> Rentals</div>
+        </div>
+        <p>Hyderabad's trusted camping tent rental service.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn">📘</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="https://wa.me/919381704244" class="social-btn">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/tents">Tent Catalog</a></li>
+          <li><a href="/booking">Book a Tent</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#">Tent Rentals</a></li>
+          <li><a href="#">Sleeping Bags</a></li>
+          <li><a href="#">Home Delivery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-line">📞 <span><strong>+91 93817 04244</strong></span></div>
+        <div class="footer-contact-line">📍 <span><strong>Hyderabad, Telangana</strong></span></div>
+        <div class="footer-contact-line">⏰ <span><strong>8 AM – 9 PM Daily</strong></span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Hyderabad Camping Tent Rentals. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
