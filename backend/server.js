@@ -26,6 +26,7 @@ app.get('/login',    (req, res) => res.sendFile(path.join(__dirname, '../fronten
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, '../frontend/register.html')));
 app.get('/dashboard',(req, res) => res.sendFile(path.join(__dirname, '../frontend/dashboard.html')));
 app.get('/admin',    (req, res) => res.sendFile(path.join(__dirname, '../frontend/admin.html')));
+app.get('/photos',   (req, res) => res.sendFile(path.join(__dirname, '../frontend/photos.html')));
 app.get('/',         (req, res) => res.sendFile(path.join(__dirname, '../frontend/index.html')));
 app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found.' }));
 app.use((err, req, res, next) => { console.error(err.stack); res.status(500).json({ success: false, message: 'Internal server error.' }); });

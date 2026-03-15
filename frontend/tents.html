@@ -23,6 +23,7 @@
       <li><a href="/#contact">Contact</a></li>
     </ul>
     <div class="nav-actions">
+      <button class="dark-toggle" onclick="toggleDark()">🌙 Dark</button><button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙 Dark</button>
       <a href="tel:+919381704244" class="btn btn-outline btn-sm">📞 Call Now</a>
       <a href="/booking" class="btn btn-primary btn-sm">Book a Tent</a>
     </div>
@@ -90,15 +91,15 @@
           </tr>
           <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50);">
             <td style="padding:16px 24px;font-weight:600;">Price / Day</td>
-            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹399</td>
-            <td style="padding:16px 24px;text-align:center;font-weight:700;background:rgba(243,156,18,0.04);">₹699</td>
-            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹999</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹299</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;background:rgba(243,156,18,0.04);">₹499</td>
+            <td style="padding:16px 24px;text-align:center;font-weight:700;">₹699</td>
           </tr>
           <tr style="border-bottom:1px solid var(--gray-100);">
             <td style="padding:16px 24px;font-weight:600;">Price / Week</td>
-            <td style="padding:16px 24px;text-align:center;">₹1,999</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">₹3,499</td>
-            <td style="padding:16px 24px;text-align:center;">₹4,999</td>
+            <td style="padding:16px 24px;text-align:center;">₹1,100</td>
+            <td style="padding:16px 24px;text-align:center;background:rgba(243,156,18,0.04);">₹2,999</td>
+            <td style="padding:16px 24px;text-align:center;">₹3,999</td>
           </tr>
           <tr style="border-bottom:1px solid var(--gray-100);background:var(--gray-50);">
             <td style="padding:16px 24px;font-weight:600;">Waterproof</td>
@@ -299,7 +300,7 @@ function renderTentCard(t) {
           <div class="tpb-price">₹${t.pricePerWeek.toLocaleString('en-IN')}<small>/wk</small></div>
         </div>
       </div>
-      <a href="/booking" class="btn ${rentBtns[t.id]}" style="width:100%;justify-content:center;${rentBtnStyles[t.id]}">Rent Now →</a>
+      <a href="/booking" class="btn ${rentBtns[t.id]}" style="width:100%;justify-content:center;${rentBtnStyles[t.id]}">Rent This Tent →</a>
     </div>
   </div>`;
 }

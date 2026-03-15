@@ -312,3 +312,20 @@ if (window.location.pathname === '/booking') {
     window.location.href = '/login';
   }
 }
+
+// ── Dark Mode Toggle (Feature 5) ──
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('darkMode', isDark ? 'on' : 'off');
+  const btn = document.getElementById('darkToggle');
+  if (btn) btn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+}
+
+// Apply saved dark mode preference on page load
+(function() {
+  if (localStorage.getItem('darkMode') === 'on') {
+    document.body.classList.add('dark');
+    const btn = document.getElementById('darkToggle');
+    if (btn) btn.textContent = '☀️ Light';
+  }
+})();

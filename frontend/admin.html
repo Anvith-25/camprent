@@ -72,6 +72,24 @@ body { background:var(--gray-50); }
 .revenue-highlight .stat-box-num { color:white; }
 .revenue-highlight .stat-box-label { color:rgba(255,255,255,0.75); }
 @media(max-width:900px){ .admin-layout{grid-template-columns:1fr;} .admin-sidebar{display:none;} .stat-grid{grid-template-columns:1fr 1fr;} }
+
+/* Admin dark mode */
+body.dark .admin-sidebar { background: #1E2535; border-color: #2D3748; }
+body.dark .sidebar-link { color: #A0AEC0; }
+body.dark .sidebar-link:hover, body.dark .sidebar-link.active { background: rgba(58,110,165,0.2); color: #5B8FCA; }
+body.dark .admin-main { background: #161D2B; }
+body.dark .stat-box { background: #1E2535; border-color: #2D3748; }
+body.dark .admin-card { background: #1E2535; border-color: #2D3748; }
+body.dark .admin-card-header { background: #1E2535; border-color: #2D3748; }
+body.dark .data-table th { background: #161D2B; color: #718096; }
+body.dark .data-table td { color: #E2E8F0; border-color: #2D3748; }
+body.dark .data-table tr:hover td { background: rgba(255,255,255,0.03); }
+body.dark .modal-panel { background: #1E2535; }
+body.dark .modal-panel h3 { color: #F7FAFC; }
+body.dark .modal-form select, body.dark .modal-form input, body.dark .modal-form textarea { background: #2D3748; border-color: #3D4A5C; color: #F7FAFC; }
+body.dark .filter-bar { background: #1A2130; border-color: #2D3748; }
+body.dark .filter-bar select, body.dark .filter-bar input { background: #1E2535; border-color: #3D4A5C; color: #F7FAFC; }
+
 </style>
 </head>
 <body>
@@ -83,6 +101,7 @@ body { background:var(--gray-50); }
   </div>
   <div class="admin-nav-right">
     <span style="color:rgba(255,255,255,0.6);font-size:0.85rem;" id="adminName"></span>
+    <button class="dark-toggle" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);" onclick="toggleDark()">🌙</button>
     <a href="/" class="btn btn-ghost btn-sm" target="_blank">View Site</a>
     <button class="btn btn-sm" style="background:#EF4444;color:white;border:none;" onclick="logout()">Sign Out</button>
   </div>
@@ -152,7 +171,7 @@ body { background:var(--gray-50); }
           <input type="text" id="searchInput" placeholder="Search name / ID…" oninput="filterTable()" style="min-width:180px;">
           <button class="btn btn-primary btn-sm" onclick="loadAllBookings()">🔄 Refresh</button>
         </div>
-        <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Booking ID</th><th>Name</th><th>Phone</th><th>Tent</th><th>Dates</th><th>Qty</th><th>Total</th><th>Delivery</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="allBookingsBody"><tr><td colspan="11" class="empty-state">Loading…</td></tr></tbody></table></div>
+        <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Booking ID</th><th>Name</th><th>Phone</th><th>Tent</th><th>Dates</th><th>Qty</th><th>Total</th><th>Pay Method</th><th>Delivery</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="allBookingsBody"><tr><td colspan="11" class="empty-state">Loading…</td></tr></tbody></table></div>
         <div style="padding:16px 22px;color:var(--gray-600);font-size:0.85rem;" id="bookingCount"></div>
       </div>
     </div>
@@ -200,6 +219,10 @@ body { background:var(--gray-50); }
         <label>Admin Notes</label>
         <textarea id="editNotes" placeholder="Internal notes about this booking…"></textarea>
       </div>
+      <div>
+        <label>UPI Transaction ID</label>
+        <input type="text" id="editUpiTxn" placeholder="Transaction ID if UPI payment">
+      </div>
       <div class="modal-btns">
         <button class="btn btn-primary" onclick="saveBooking()">💾 Save Changes</button>
         <button class="btn btn-outline" onclick="closeEdit()">Cancel</button>
@@ -208,6 +231,7 @@ body { background:var(--gray-50); }
   </div>
 </div>
 
+<script src="script.js"></script>
 <script>
 const API = window.location.origin;
 const token = localStorage.getItem('token');
@@ -320,7 +344,8 @@ function renderBookings(bookings) {
       <td>${sb(b.status)}</td>
       <td>${pb(b.paymentStatus)}</td>
       <td style="white-space:nowrap;">
-        <button class="action-btn btn-edit" onclick="openEdit('${b.bookingId}','${b.status}','${b.paymentStatus}',${b.paymentAmount||0},'${(b.adminNotes||'').replace(/'/g,"\\'")}')">✏️ Edit</button>
+        <button class="action-btn btn-edit" onclick="openEdit('${b.bookingId}','${b.status}','${b.paymentStatus}',${b.paymentAmount||0},'${(b.adminNotes||'').replace(/'/g,\"\\'\")}'.replace(/\"/g,''),'${(b.upiTransactionId||'')}')">✏️ Edit</button>
+        ${b.status !== 'cancelled' ? `<button class="action-btn" style="background:#FEF3C7;color:#D97706;margin-top:4px;" onclick="adminCancelBooking('${b.bookingId}')">❌ Cancel</button>` : ''}
         <button class="action-btn btn-del" style="margin-top:4px;" onclick="deleteBooking('${b.bookingId}')">🗑️ Del</button>
       </td>
     </tr>`).join('');
@@ -348,24 +373,29 @@ async function loadUsers() {
 }
 
 // ── Edit Booking Modal ──
-function openEdit(id, status, payment, amount, notes) {
+function openEdit(id, status, payment, amount, notes, upiTxn) {
   document.getElementById('editBookingId').value = id;
   document.getElementById('editStatus').value = status;
   document.getElementById('editPayment').value = payment;
   document.getElementById('editAmount').value = amount;
   document.getElementById('editNotes').value = notes;
+  document.getElementById('editUpiTxn').value = upiTxn || '';
   document.getElementById('editModal').classList.add('open');
 }
 function closeEdit() { document.getElementById('editModal').classList.remove('open'); }
 
 async function saveBooking() {
   const id = document.getElementById('editBookingId').value;
+  const paymentStatus = document.getElementById('editPayment').value;
   const body = {
     status: document.getElementById('editStatus').value,
-    paymentStatus: document.getElementById('editPayment').value,
+    paymentStatus: paymentStatus,
     paymentAmount: parseFloat(document.getElementById('editAmount').value) || 0,
-    adminNotes: document.getElementById('editNotes').value
+    adminNotes: document.getElementById('editNotes').value,
+    upiTransactionId: document.getElementById('editUpiTxn').value
   };
+  // Feature 7: warn admin that marking paid will auto-confirm booking
+  if (paymentStatus === 'paid' && !confirm('Marking payment as PAID will automatically set booking status to CONFIRMED. Continue?')) return;
   try {
     const res = await fetch(`${API}/api/bookings/${id}`, {
       method: 'PATCH',
@@ -414,6 +444,22 @@ async function deleteUser(id, name) {
 document.getElementById('editModal').addEventListener('click', function(e) {
   if (e.target === this) closeEdit();
 });
+
+// Admin cancel booking
+async function adminCancelBooking(id) {
+  const reason = prompt(`Cancel booking ${id}?\nEnter reason (optional):`);
+  if (reason === null) return; // user clicked Cancel
+  try {
+    const res = await fetch(\`\${API}/api/bookings/\${id}/cancel\`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Authorization': \`Bearer \${token}\` },
+      body: JSON.stringify({ reason: reason || 'Cancelled by admin' })
+    });
+    const data = await res.json();
+    if (data.success) { showAlert('Booking cancelled and customer notified.', 'success'); loadAllBookings(); loadStats(); }
+    else showAlert(data.message, 'error');
+  } catch(e) { showAlert('Server error.', 'error'); }
+}
 
 // Init
 loadStats();

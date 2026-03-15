@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book a Tent – Hyderabad Camping Tent Rentals</title>
-<meta name="description" content="Book a camping tent for rent in Hyderabad. Fill out our simple booking form and get confirmation instantly.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
     <a href="/" class="nav-logo">
@@ -23,54 +20,39 @@
       <li><a href="/#contact">Contact</a></li>
     </ul>
     <div class="nav-actions">
+      <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙 Dark</button>
       <a href="tel:+919381704244" class="btn btn-outline btn-sm">📞 Call Now</a>
       <a href="/tents" class="btn btn-primary btn-sm">View Tents</a>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/">Home</a>
-  <a href="/tents">Tent Catalog</a>
-  <a href="/booking">Book a Tent</a>
-  <a href="/#contact">Contact</a>
-  <a href="tel:+919381704244" class="btn btn-outline">📞 Call Now</a>
+  <a href="/">Home</a><a href="/tents">Tent Catalog</a><a href="/booking">Book a Tent</a><a href="/#contact">Contact</a>
+  <button class="dark-toggle" onclick="toggleDark()" style="margin-top:8px;">🌙 Toggle Dark Mode</button>
 </div>
 
-<!-- BOOKING HERO -->
 <section class="booking-hero">
   <div class="container">
-    <div class="breadcrumb">
-      <a href="/">Home</a>
-      <span>›</span>
-      <a href="/tents">Tents</a>
-      <span>›</span>
-      <span>Book a Tent</span>
-    </div>
+    <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/tents">Tents</a><span>›</span><span>Book a Tent</span></div>
     <span class="chip">Online Booking</span>
     <h1 class="page-hero-title">Book Your Tent</h1>
-    <p class="page-hero-sub">Fill in the details below. We'll confirm your booking within a few hours and reach out before delivery.</p>
+    <p class="page-hero-sub">Fill in the details below. Receipt will be sent to your email and phone after booking.</p>
   </div>
 </section>
 
-<!-- BOOKING SECTION -->
 <section class="section" style="background:var(--gray-50);">
   <div class="container">
     <div class="booking-layout">
-
-      <!-- FORM -->
       <div class="booking-form-card">
         <h2 style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-bottom:6px;">Rental Details</h2>
-        <p style="color:var(--gray-600);font-size:0.9rem;margin-bottom:32px;">All fields marked <span style="color:#E74C3C;">*</span> are required.</p>
+        <p style="color:var(--gray-600);font-size:0.9rem;margin-bottom:32px;">Fields marked <span style="color:#E74C3C;">*</span> are required.</p>
 
         <form id="bookingForm" novalidate>
+
           <!-- Personal Info -->
           <div style="margin-bottom:28px;">
-            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
-              👤 Personal Information
-            </div>
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">👤 Personal Information</div>
             <div class="form-grid">
               <div class="form-group">
                 <label for="name">Full Name <span>*</span></label>
@@ -92,17 +74,15 @@
 
           <!-- Rental Info -->
           <div style="margin-bottom:28px;">
-            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
-              ⛺ Rental Information
-            </div>
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">⛺ Rental Information</div>
             <div class="form-grid">
               <div class="form-group">
                 <label for="tentType">Tent Type <span>*</span></label>
                 <select id="tentType">
                   <option value="" disabled selected>Select a tent</option>
-                  <option value="explorer">Explorer Tent – 2 Person (₹399/day)</option>
-                  <option value="adventure">Adventure Tent – 4 Person (₹699/day)</option>
-                  <option value="family">Family Dome Tent – 6 Person (₹999/day)</option>
+                  <option value="explorer">Explorer Tent – 2 Person (₹299/day)</option>
+                  <option value="adventure">Adventure Tent – 4 Person (₹499/day)</option>
+                  <option value="family">Family Dome Tent – 6 Person (₹699/day)</option>
                 </select>
                 <span class="form-error"></span>
               </div>
@@ -110,11 +90,8 @@
                 <label for="numberOfTents">Number of Tents <span>*</span></label>
                 <select id="numberOfTents">
                   <option value="" disabled selected>Select quantity</option>
-                  <option value="1">1 Tent</option>
-                  <option value="2">2 Tents</option>
-                  <option value="3">3 Tents</option>
-                  <option value="4">4 Tents</option>
-                  <option value="5">5 Tents</option>
+                  <option value="1">1 Tent</option><option value="2">2 Tents</option>
+                  <option value="3">3 Tents</option><option value="4">4 Tents</option><option value="5">5 Tents</option>
                 </select>
                 <span class="form-error"></span>
               </div>
@@ -133,24 +110,67 @@
 
           <!-- Delivery -->
           <div style="margin-bottom:28px;">
-            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">
-              🚚 Delivery Options
-            </div>
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">🚚 Delivery Options</div>
             <div class="form-grid">
               <div class="form-group full">
                 <label for="deliveryOption">Delivery Preference <span>*</span></label>
                 <select id="deliveryOption">
                   <option value="" disabled selected>Choose delivery option</option>
-                  <option value="delivery">🚚 Home / Campsite Delivery (Hyderabad)</option>
+                  <option value="delivery">🚚 Home / Campsite Delivery</option>
                   <option value="pickup">🏪 Self Pickup from Our Location</option>
                 </select>
                 <span class="form-error"></span>
               </div>
               <div class="form-group full" id="deliveryAddressGroup">
                 <label for="address">Delivery Address <span>*</span></label>
-                <textarea id="address" placeholder="Enter your full delivery address including area, landmark, and city..." rows="3"></textarea>
+                <textarea id="address" placeholder="Enter full delivery address including area, landmark, city..." rows="3"></textarea>
                 <span class="form-error"></span>
               </div>
+            </div>
+          </div>
+
+          <!-- PAYMENT METHOD (Feature 1) -->
+          <div style="margin-bottom:28px;">
+            <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--gray-100);">💳 Payment Method</div>
+
+            <div class="payment-options">
+              <div class="payment-option selected" id="pay-cash" onclick="selectPayment('cash')">
+                <div class="payment-option-icon">💵</div>
+                <div class="payment-option-label">Cash</div>
+                <div class="payment-option-sub">Pay on delivery or pickup. No advance needed.</div>
+              </div>
+              <div class="payment-option" id="pay-upi" onclick="selectPayment('upi')">
+                <div class="payment-option-icon">📱</div>
+                <div class="payment-option-label">UPI / Online</div>
+                <div class="payment-option-sub">Pay now via GPay, PhonePe, Paytm or any UPI app.</div>
+              </div>
+            </div>
+            <input type="hidden" id="paymentMethod" value="cash">
+
+            <!-- UPI Section -->
+            <div class="upi-section" id="upiSection">
+              <h4>📱 Pay via UPI</h4>
+              <p style="color:var(--gray-600);font-size:0.88rem;margin-bottom:12px;">Scan the QR code or use any UPI app to pay the booking amount.</p>
+              <div class="upi-id-box" id="upiIdDisplay">Loading...</div>
+              <div class="qr-placeholder" id="qrContainer">
+                <canvas id="qrCanvas" width="150" height="150"></canvas>
+              </div>
+              <div class="upi-apps">
+                <a id="gpayLink" href="#" class="upi-app-btn" style="background:#1A73E8;color:white;" target="_blank">
+                  <span>G</span> Google Pay
+                </a>
+                <a id="phonepeLink" href="#" class="upi-app-btn" style="background:#5F259F;color:white;" target="_blank">
+                  📲 PhonePe
+                </a>
+                <a id="paytmLink" href="#" class="upi-app-btn" style="background:#00BAF2;color:white;" target="_blank">
+                  💙 Paytm
+                </a>
+              </div>
+              <p style="margin-top:12px;font-size:0.8rem;color:var(--gray-600);">After paying, enter your UPI Transaction ID below:</p>
+              <div class="form-group" style="max-width:320px;margin:8px auto 0;">
+                <input type="text" id="upiTransactionId" placeholder="e.g. 123456789012" style="text-align:center;font-family:monospace;">
+              </div>
+              <p style="margin-top:8px;font-size:0.75rem;color:var(--gray-400);">Or WhatsApp us your payment screenshot: <a href="https://wa.me/919381704244" style="color:var(--blue);">+91 93817 04244</a></p>
             </div>
           </div>
 
@@ -162,9 +182,8 @@
             </div>
           </div>
 
-          <!-- Terms -->
-          <div style="background:var(--blue-light);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:28px;font-size:0.85rem;color:var(--blue-dark);line-height:1.6;">
-            <strong>📋 Booking Terms:</strong> A refundable security deposit may be required. Tents must be returned in clean condition. Cancellations 24+ hours before rental start date are fully refundable.
+          <div style="background:var(--blue-light);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--blue-dark);line-height:1.6;">
+            📧 A booking receipt will be sent to your <strong>email</strong> and <strong>phone number</strong> after confirmation.
           </div>
 
           <button type="submit" id="submitBtn" class="btn btn-orange btn-lg" style="width:100%;justify-content:center;font-size:1rem;">
@@ -173,129 +192,251 @@
         </form>
       </div>
 
-      <!-- SIDEBAR -->
+      <!-- Sidebar -->
       <div>
         <div class="booking-sidebar-card">
           <h3>📋 Booking Summary</h3>
-          <div class="summary-row">
-            <span class="label">Tent</span>
-            <span class="value" id="sum-tent">–</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Quantity</span>
-            <span class="value" id="sum-qty">–</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Dates</span>
-            <span class="value" id="sum-dates">–</span>
-          </div>
+          <div class="summary-row"><span class="label">Tent</span><span class="value" id="sum-tent">–</span></div>
+          <div class="summary-row"><span class="label">Quantity</span><span class="value" id="sum-qty">–</span></div>
+          <div class="summary-row"><span class="label">Dates</span><span class="value" id="sum-dates">–</span></div>
+          <div class="summary-row"><span class="label">Payment</span><span class="value" id="sum-payment">Cash</span></div>
           <div class="total-row">
             <span class="label">Total</span>
             <span class="value" id="sum-total">–</span>
           </div>
           <div class="info-chips">
-            <div class="info-chip">ℹ️ Price calculated at daily rate × quantity × days</div>
-            <div class="info-chip">📞 We'll call to confirm before delivery</div>
+            <div class="info-chip">ℹ️ Price = daily rate × qty × days</div>
+            <div class="info-chip">📧 Receipt sent to email & phone</div>
           </div>
         </div>
 
-        <!-- Contact card -->
-        <div class="booking-sidebar-card" style="margin-top:20px;">
-          <h3>💬 Need Help?</h3>
-          <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:18px;line-height:1.65;">
-            Call or WhatsApp us directly for quick bookings, availability checks, or custom packages.
-          </p>
-          <a href="tel:+919381704244" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">
-            📞 +91 93817 04244
-          </a>
-          <a href="https://wa.me/919381704244" target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;">
-            💬 WhatsApp Us
-          </a>
-        </div>
-
-        <!-- Price reference -->
         <div class="booking-sidebar-card" style="margin-top:20px;">
           <h3>💰 Price Reference</h3>
           <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);">
-              <span style="color:var(--gray-600);">Explorer (2P)</span>
-              <span style="font-weight:700;">₹399/day</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);">
-              <span style="color:var(--gray-600);">Adventure (4P)</span>
-              <span style="font-weight:700;">₹699/day</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;">
-              <span style="color:var(--gray-600);">Family Dome (6P)</span>
-              <span style="font-weight:700;">₹999/day</span>
-            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="color:var(--gray-600);">Explorer (2P)</span><span style="font-weight:700;">₹299/day</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="color:var(--gray-600);">Adventure (4P)</span><span style="font-weight:700;">₹499/day</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding:8px 0;"><span style="color:var(--gray-600);">Family Dome (6P)</span><span style="font-weight:700;">₹699/day</span></div>
           </div>
+        </div>
+
+        <div class="booking-sidebar-card" style="margin-top:20px;">
+          <h3>💬 Need Help?</h3>
+          <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:16px;line-height:1.65;">Questions? Call or WhatsApp us directly.</p>
+          <a href="tel:+919381704244" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;">📞 +91 93817 04244</a>
+          <a href="https://wa.me/919381704244" target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;">💬 WhatsApp Us</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SUCCESS MODAL -->
+<!-- Success Modal -->
 <div class="modal-overlay" id="successModal">
   <div class="modal-box">
     <div class="modal-icon">🎉</div>
     <h2>Booking Confirmed!</h2>
-    <p>Your tent rental request has been received. We'll contact you within a few hours to confirm delivery details.</p>
+    <p>Your tent rental has been booked. Receipt sent to your email & phone.</p>
     <div class="modal-booking-id" id="modal-id">HCR12345</div>
     <div class="modal-price" id="modal-price"></div>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
       <button class="btn btn-primary" onclick="closeModal()">✅ Done</button>
-      <a href="/tents" class="btn btn-outline">Browse More Tents</a>
+      <a href="/dashboard" class="btn btn-outline">📋 My Bookings</a>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-nav-logo">
-          <div class="footer-nav-logo-mark">⛺</div>
-          <div class="footer-nav-logo-text">Hyd <span>Camp</span> Rentals</div>
-        </div>
+        <div class="footer-nav-logo"><div class="footer-nav-logo-mark">⛺</div><div class="footer-nav-logo-text">Hyd <span>Camp</span> Rentals</div></div>
         <p>Hyderabad's trusted camping tent rental service.</p>
         <div class="social-row">
-          <a href="#" class="social-btn">📘</a>
-          <a href="#" class="social-btn">📸</a>
-          <a href="https://wa.me/919381704244" class="social-btn">💬</a>
+          <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK" target="_blank" class="social-btn" title="Leave a Review">⭐</a>
+          <a href="/photos" class="social-btn" title="Tent Photos">📸</a>
+          <a href="https://wa.me/919381704244" target="_blank" class="social-btn" title="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/tents">Tent Catalog</a></li>
-          <li><a href="/booking">Book a Tent</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="#">Tent Rentals</a></li>
-          <li><a href="#">Sleeping Bags</a></li>
-          <li><a href="#">Home Delivery</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <div class="footer-contact-line">📞 <span><strong>+91 93817 04244</strong></span></div>
-        <div class="footer-contact-line">📍 <span><strong>Hyderabad, Telangana</strong></span></div>
-        <div class="footer-contact-line">⏰ <span><strong>8 AM – 9 PM Daily</strong></span></div>
-      </div>
+      <div class="footer-col"><h4>Quick Links</h4><ul class="footer-links"><li><a href="/">Home</a></li><li><a href="/tents">Tent Catalog</a></li><li><a href="/booking">Book a Tent</a></li></ul></div>
+      <div class="footer-col"><h4>Services</h4><ul class="footer-links"><li><a href="#">Tent Rentals</a></li><li><a href="#">Sleeping Bags</a></li><li><a href="#">Home Delivery</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><div class="footer-contact-line">📞 <span><strong>+91 93817 04244</strong></span></div><div class="footer-contact-line">📍 <span><strong>Hyderabad, Telangana</strong></span></div><div class="footer-contact-line">⏰ <span><strong>8 AM – 9 PM Daily</strong></span></div></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2025 Hyderabad Camping Tent Rentals. All rights reserved.</span>
-    </div>
+    <div class="footer-bottom"><span>© 2025 Hyderabad Camping Tent Rentals. All rights reserved.</span></div>
   </div>
 </footer>
 
 <script src="script.js"></script>
+<script>
+const API = window.location.origin;
+const TENT_PRICES = {
+  explorer: { name: 'Explorer Tent (2P)', day: 299, week: 1100 },
+  adventure: { name: 'Adventure Tent (4P)', day: 499, week: 2999 },
+  family: { name: 'Family Dome Tent (6P)', day: 699, week: 3999 }
+};
+const UPI_ID = ''; // Will be loaded from server
+
+// Feature 3: Pre-select tent from URL param
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const tent = params.get('tent');
+  if (tent && document.getElementById('tentType')) {
+    document.getElementById('tentType').value = tent;
+    updateSummary();
+  }
+  loadUpiId();
+});
+
+// Load UPI ID from server config
+async function loadUpiId() {
+  try {
+    const res = await fetch(`${API}/api/tents/config`);
+    const data = await res.json();
+    if (data.upiId) updateUpiDisplay(data.upiId, document.getElementById('sum-total').textContent);
+  } catch(e) { updateUpiDisplay('camprent@upi', '0'); }
+}
+
+// Payment method selection
+function selectPayment(method) {
+  document.getElementById('paymentMethod').value = method;
+  document.getElementById('pay-cash').classList.toggle('selected', method === 'cash');
+  document.getElementById('pay-upi').classList.toggle('selected', method === 'upi');
+  document.getElementById('upiSection').classList.toggle('show', method === 'upi');
+  document.getElementById('sum-payment').textContent = method === 'upi' ? '📱 UPI / Online' : '💵 Cash';
+  if (method === 'upi') updateSummary();
+}
+
+function updateUpiDisplay(upiId, amount) {
+  const cleanAmt = amount.replace(/[₹,]/g, '') || '0';
+  document.getElementById('upiIdDisplay').textContent = upiId;
+  const upiLink = `upi://pay?pa=${upiId}&pn=HydCampRentals&am=${cleanAmt}&cu=INR`;
+  document.getElementById('gpayLink').href = upiLink;
+  document.getElementById('phonepeLink').href = upiLink;
+  document.getElementById('paytmLink').href = upiLink;
+  // Generate simple QR code pattern (visual only)
+  generateQR(upiId, cleanAmt);
+}
+
+function generateQR(upiId, amount) {
+  const canvas = document.getElementById('qrCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  // Draw a visual QR placeholder with UPI info
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, 150, 150);
+  ctx.fillStyle = '#1A2332';
+  // Draw QR-like pattern
+  const cell = 5;
+  const pattern = [[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],[1,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1],[1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1],[1,0,1,1,1,0,1,0,0,1,1,0,0,0,1,0,1,1,1,0,1],[1,0,1,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,1,0,1],[1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0],[1,1,0,1,1,0,1,1,0,1,0,0,1,1,1,0,1,0,1,1,0],[0,1,0,0,1,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,1],[1,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,1],[0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,1,0,0],[1,1,1,1,1,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0],[1,1,1,1,1,1,1,0,1,1,0,0,1,0,1,0,1,0,1,1,0]];
+  pattern.forEach((row, r) => { row.forEach((cell_val, c) => { if(cell_val) { ctx.fillRect(c*cell+12, r*cell+12, cell-1, cell-1); } }); });
+  ctx.fillStyle = '#3A6EA5';
+  ctx.font = 'bold 8px Arial'; ctx.textAlign = 'center';
+  ctx.fillText('UPI PAY', 75, 120);
+  ctx.fillText('₹' + amount, 75, 132);
+}
+
+// Summary update
+const fields = {
+  tentType: document.getElementById('tentType'),
+  numberOfTents: document.getElementById('numberOfTents'),
+  startDate: document.getElementById('startDate'),
+  endDate: document.getElementById('endDate')
+};
+
+// Set min dates
+const today = new Date().toISOString().split('T')[0];
+if (fields.startDate) fields.startDate.min = today;
+if (fields.endDate) fields.endDate.min = today;
+if (fields.startDate) {
+  fields.startDate.addEventListener('change', () => {
+    if (fields.endDate) { fields.endDate.min = fields.startDate.value; if(fields.endDate.value <= fields.startDate.value) fields.endDate.value = ''; }
+    updateSummary();
+  });
+}
+
+['tentType','numberOfTents','endDate'].forEach(k => { if(fields[k]) fields[k].addEventListener('change', updateSummary); });
+
+function formatDate(str) { if (!str) return '—'; return new Date(str).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+
+function updateSummary() {
+  const tent = fields.tentType?.value;
+  const num = parseInt(fields.numberOfTents?.value) || 1;
+  const start = fields.startDate?.value;
+  const end = fields.endDate?.value;
+  const setEl = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  if (tent && TENT_PRICES[tent]) {
+    const t = TENT_PRICES[tent];
+    setEl('sum-tent', t.name);
+    setEl('sum-qty', `${num} tent${num>1?'s':''}`);
+    if (start && end) {
+      const days = Math.max(1, Math.ceil((new Date(end)-new Date(start))/86400000));
+      const total = t.day * num * days;
+      setEl('sum-dates', `${formatDate(start)} → ${formatDate(end)} (${days}d)`);
+      setEl('sum-total', `₹${total.toLocaleString('en-IN')}`);
+      // Update UPI amount
+      const upiId = document.getElementById('upiIdDisplay')?.textContent;
+      if (upiId && upiId !== 'Loading...') updateUpiDisplay(upiId, total.toString());
+    }
+  }
+}
+
+// Show/hide delivery address
+document.getElementById('deliveryOption')?.addEventListener('change', function() {
+  document.getElementById('deliveryAddressGroup')?.classList.toggle('show', this.value === 'delivery');
+});
+
+// Form submit
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const authToken = localStorage.getItem('token');
+  if (!authToken) { window.location.href = '/login'; return; }
+
+  const payload = {
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    tentType: document.getElementById('tentType').value,
+    numberOfTents: document.getElementById('numberOfTents').value,
+    startDate: document.getElementById('startDate').value,
+    endDate: document.getElementById('endDate').value,
+    deliveryOption: document.getElementById('deliveryOption').value,
+    address: document.getElementById('address')?.value.trim(),
+    notes: document.getElementById('notes').value.trim(),
+    paymentMethod: document.getElementById('paymentMethod').value,
+    upiTransactionId: document.getElementById('upiTransactionId')?.value.trim()
+  };
+
+  // Basic validation
+  if (!payload.name || !payload.phone || !payload.email || !payload.tentType || !payload.numberOfTents || !payload.startDate || !payload.endDate || !payload.deliveryOption) {
+    alert('Please fill in all required fields.'); return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Submitting…';
+
+  try {
+    const res = await fetch(`${API}/api/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('modal-id').textContent = data.booking.bookingId;
+      document.getElementById('modal-price').innerHTML = `Total: <strong>₹${data.booking.totalPrice?.toLocaleString('en-IN')}</strong> • Payment: ${data.booking.paymentMethod === 'upi' ? '📱 UPI' : '💵 Cash'}`;
+      document.getElementById('successModal').classList.add('open');
+      e.target.reset();
+    } else {
+      alert(data.message || 'Booking failed. Please try again.');
+    }
+  } catch(err) {
+    alert('Cannot connect to server. Please try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = '✅ Confirm Booking';
+  }
+});
+
+function closeModal() { document.getElementById('successModal').classList.remove('open'); }
+</script>
 </body>
 </html>
